@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Cliente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="cliente.css">
+</head>
+<body>
+  <div class="cliente-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logos">
+        <img src="https://goesperu.com/wp-content/uploads/2024/08/771x216.png" alt="Logo GOES" class="logo-goes">
+        <img id="logoCliente" src="" alt="Logo Cliente" class="logo-cliente">
+      </div>
+      <div class="sidebar-user">
+        <i class="fa-regular fa-user"></i>
+        <span id="sidebarUsuario"></span>
+      </div>
+      <button id="cerrarSesionCliente" class="btn-cerrar-sesion"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</button>
+    </aside>
+    <main class="main-content">
+      <div class="main-header">
+        <h1>Registros de Acceso</h1>
+        <div class="switch-group">
+          <span class="switch-label" id="labelPeatonal">Peatonal</span>
+          <label class="switch">
+            <input type="checkbox" id="tipoSwitch">
+            <span class="slider"></span>
+          </label>
+          <span class="switch-label" id="labelVehicular">Vehicular</span>
+        </div>
+      </div>
+      <div class="resumen-filtros">
+        <div class="tarjetas-resumen">
+          <div class="tarjeta-ingresos">
+            <div class="tarjeta-titulo"><i class="fa-solid fa-arrow-right-to-city"></i> Ingresos</div>
+            <div class="tarjeta-cantidad" id="cantidadIngresos">0</div>
+          </div>
+          <div class="tarjeta-salidas">
+            <div class="tarjeta-titulo"><i class="fa-solid fa-arrow-right-from-bracket"></i> Salidas</div>
+            <div class="tarjeta-cantidad" id="cantidadSalidas">0</div>
+          </div>
+        </div>
+        <form class="filtros" id="filtrosForm" autocomplete="off">
+          <select id="filtroTipoRegistro">
+            <option value="">Tipo de registro</option>
+            <option value="Ingreso">Ingreso</option>
+            <option value="Salida">Salida</option>
+          </select>
+          <select id="filtroEmpresa">
+            <option value="">Empresa</option>
+          </select>
+          <input type="text" id="filtroNombres" placeholder="Nombres">
+          <input type="text" id="filtroDocumento" placeholder="Documento">
+          <input type="text" id="filtroMotivo" placeholder="Motivo">
+          <input type="date" id="filtroFechaDesde" placeholder="Desde">
+          <input type="date" id="filtroFechaHasta" placeholder="Hasta">
+          <button type="button" id="limpiarFiltros" title="Limpiar filtros"><i class="fa-solid fa-eraser"></i></button>
+        </form>
+      </div>
+      <div class="table-container">
+        <div class="table-actions">
+          <button type="button" id="descargarExcel" class="btn-excel"><i class="fa-solid fa-file-excel"></i> Descargar Excel</button>
+        </div>
+        <table id="registrosTabla">
+          <thead>
+            <tr id="tablaHeader"></tr>
+          </thead>
+          <tbody id="tablaBody"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <div id="modalImagen" class="modal-imagen" style="display:none;">
+    <div class="modal-imagen-content">
+      <span class="modal-cerrar" id="cerrarModalImagen">&times;</span>
+      <img id="modalImg" src="" alt="Imagen registro">
+    </div>
+  </div>
+  <script src="config.js"></script>
+  <script src="cliente.js"></script>
+</body>
+</html> 

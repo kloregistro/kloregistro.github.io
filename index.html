@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="login-bg"></div>
+  <div class="login-center">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="https://goesperu.com/wp-content/uploads/2024/08/771x216.png" alt="Logo GOES">
+      </div>
+      <h2 class="login-title">Bienvenido</h2>
+      <form id="loginForm">
+        <div class="login-group">
+          <label for="usuario"><i class="fa-regular fa-user"></i></label>
+          <input type="text" id="usuario" placeholder="Usuario" required autocomplete="username">
+        </div>
+        <div class="login-group">
+          <label for="password"><i class="fa-solid fa-lock"></i></label>
+          <input type="password" id="password" placeholder="Contraseña" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="login-btn"><i class="fa-solid fa-play"></i></button>
+      </form>
+      <div id="loginError"></div>
+    </div>
+  </div>
+  <script src="config.js"></script>
+  <script src="login.js"></script>
+</body>
+</html> 

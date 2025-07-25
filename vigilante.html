@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Registro Vigilante</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="vigilante.css">
+</head>
+<body>
+  <div class="background-img"></div>
+  <div class="overlay"></div>
+  <div class="main-center">
+    <div class="form-card">
+      <div class="form-header">
+        <img src="https://goesperu.com/wp-content/uploads/2024/08/771x216.png" alt="Logo" class="header-logo-wide">
+        <div class="header-text">
+          <h1>Registro de Acceso</h1>
+          <p class="subtitle">Completa los datos para registrar el ingreso o salida de personas y vehículos.</p>
+        </div>
+      </div>
+      <form id="registroForm" autocomplete="off">
+        <div class="form-group">
+          <label><i class="fa-regular fa-calendar-days"></i> Fecha y Hora</label>
+          <input type="text" id="fechaHora" readonly>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-regular fa-user"></i> Usuario</label>
+          <input type="text" id="usuario" readonly>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-right-left"></i> Tipo de Registro</label>
+          <select id="tipoRegistro" required>
+            <option value="">Seleccione...</option>
+            <option value="Ingreso">Ingreso</option>
+            <option value="Salida">Salida</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><i class="fa-solid fa-person-walking-arrow-right"></i> Tipo de Acceso</label>
+          <div class="radio-group">
+            <label><input type="radio" name="acceso" value="peatonal" required> <i class="fa-solid fa-person-walking"></i> Peatonal</label>
+            <label><input type="radio" name="acceso" value="vehicular"> <i class="fa-solid fa-car"></i> Vehicular</label>
+          </div>
+        </div>
+        <div class="peatonal-fields">
+          <div class="form-group">
+            <label><i class="fa-solid fa-building"></i> Empresa</label>
+            <input type="text" id="empresaPeatonal">
+          </div>
+          <div class="form-group">
+            <label><i class="fa-regular fa-id-badge"></i> Nombres</label>
+            <input type="text" id="nombresPeatonal">
+          </div>
+          <div class="form-group">
+            <label><i class="fa-regular fa-address-card"></i> Número de Documento</label>
+            <input type="number" id="documentoPeatonal" inputmode="numeric" pattern="[0-9]*">
+          </div>
+          <div class="form-group">
+            <label><i class="fa-regular fa-image"></i> Foto de DNI</label>
+            <button type="button" id="btnFotoDni"><i class="fa-solid fa-camera"></i> Tomar Foto</button>
+            <div class="photo-preview" id="previewFotoDni"></div>
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-question"></i> Motivo de Visita</label>
+            <select id="motivoPeatonal" required>
+              <option value="">Seleccione...</option>
+            </select>
+            <input type="text" id="motivoPeatonalOtro" class="input-otro" placeholder="Especifique el motivo" style="display:none; margin-top:0.5rem;" />
+          </div>
+        </div>
+        <div class="vehicular-fields">
+          <div class="form-group">
+            <label><i class="fa-solid fa-building"></i> Empresa</label>
+            <input type="text" id="empresaVehicular">
+          </div>
+          <div class="form-group">
+            <label><i class="fa-regular fa-id-badge"></i> Nombres</label>
+            <input type="text" id="nombresVehicular">
+          </div>
+          <div class="form-group">
+            <label><i class="fa-regular fa-address-card"></i> Número de Documento</label>
+            <input type="number" id="documentoVehicular" inputmode="numeric" pattern="[0-9]*">
+          </div>
+          <div class="form-group">
+            <label><i class="fa-regular fa-image"></i> Foto de Brevete</label>
+            <button type="button" id="btnFotoDniVehicular"><i class="fa-solid fa-camera"></i> Tomar Foto</button>
+            <div class="photo-preview" id="previewFotoDniVehicular"></div>
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-truck"></i> Placa Tracto</label>
+            <input type="text" id="placaTracto" maxlength="7" placeholder="ABC-123">
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-trailer"></i> Placa de Carreta</label>
+            <input type="text" id="placaCarreta" maxlength="7" placeholder="No Aplica">
+          </div>
+          <div class="form-group">
+            <label><i class="fa-regular fa-image"></i> Foto del Vehículo</label>
+            <button type="button" id="btnFotoVehiculo"><i class="fa-solid fa-camera"></i> Tomar Foto</button>
+            <div class="photo-preview" id="previewFotoVehiculo"></div>
+          </div>
+          <div class="form-group">
+            <label><i class="fa-regular fa-image"></i> Foto Posterior</label>
+            <button type="button" id="btnFotoPosterior"><i class="fa-solid fa-camera"></i> Tomar Foto</button>
+            <div class="photo-preview" id="previewFotoPosterior"></div>
+          </div>
+          <div class="form-group">
+            <label><i class="fa-solid fa-question"></i> Motivo de Visita</label>
+            <select id="motivoVehicular" required>
+              <option value="">Seleccione...</option>
+            </select>
+            <input type="text" id="motivoVehicularOtro" class="input-otro" placeholder="Especifique el motivo" style="display:none; margin-top:0.5rem;" />
+          </div>
+        </div>
+        <button type="submit" class="btn-principal"><i class="fa-solid fa-floppy-disk"></i> Registrar</button>
+      </form>
+      <div class="footer">
+        <div class="footer-usuario">
+          <span id="footerUsuario"></span>
+        </div>
+        <button id="cerrarSesion" class="btn-cerrar-sesion"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</button>
+      </div>
+    </div>
+  </div>
+  <script src="config.js"></script>
+  <script src="vigilante.js"></script>
+</body>
+</html> 

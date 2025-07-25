@@ -1,0 +1,34 @@
+// Configuración centralizada del sistema
+const CONFIG = {
+  // URL del Apps Script desplegado
+  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwIR4ZHyyT_BVLksYGkZTrDoWBmTR0KS_kEqTRaOW6jLOHZEwmZEgq3K3XhzgUlbmfM/exec',
+  
+  // Configuración de Cloudinary
+  CLOUDINARY: {
+    CLOUD_NAME: 'dcxezyakl',
+    UPLOAD_PRESET: 'KLO_GOES'
+  },
+  
+  // Configuración del Google Sheet
+  SPREADSHEET_ID: '1gFdBeXJIS6A9IjvoQCD47QlVus7r6SUsPLcDNWuO7vI'
+};
+
+// Función para hacer peticiones al backend
+async function callBackend(action, params = {}) {
+  const requestBody = new URLSearchParams({
+    action,
+    ...params
+  });
+  
+  const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: requestBody
+  });
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  
+  return await response.json();
+} 
