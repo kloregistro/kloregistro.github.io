@@ -168,45 +168,55 @@ window.addEventListener('DOMContentLoaded', async () => {
     renderTabla();
   });
 
+  // Botón de descarga de Excel (dentro del scope correcto)
+  document.getElementById('descargarExcel').onclick = function() {
+    const vehicular = tipoSwitch.checked;
+    const columnasPeatonal = [
+      'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'Motivo', 'FotoDni'
+    ];
+    const columnasVehicular = [
+      'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'PlacaTracto', 'PlacaCarreta', 'Motivo', 'FotoDni', 'FotoVehiculo', 'FotoPosterior'
+    ];
+    const columnas = vehicular ? columnasVehicular : columnasPeatonal;
+    const filtrados = aplicarFiltros(registros);
+    if (!filtrados.length) {
+      alert('No hay registros para descargar.');
+      return;
+    }
+    // Construir datos para SheetJS
+    const data = [columnas];
+    filtrados.forEach(r => {
+      data.push(columnas.map(col => {
+        if (col.startsWith('Foto') && r[col]) {
+          return { t: 's', v: r[col], l: { Target: r[col] } };
+        }
+        return r[col] || '';
+      }));
+    });
+    // Crear hoja y libro
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    // Formato de encabezados
+    columnas.forEach((col, idx) => {
+      const cell = ws[XLSX.utils.encode_cell({ r: 0, c: idx })];
+      if (cell) {
+        cell.s = {
+          font: { bold: true, color: { rgb: 'FFFFFF' } },
+          fill: { fgColor: { rgb: vehicular ? '2196F3' : 'FF9800' } }
+        };
+      }
+    });
+    // Ajustar ancho de columnas
+    ws['!cols'] = columnas.map(() => ({ wch: 18 }));
+    // Crear libro y exportar
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Registros');
+    XLSX.writeFile(wb, 'registros_filtrados.xlsx');
+  };
+
   await cargarRegistros();
 });
 
 document.getElementById('cerrarSesionCliente').onclick = function() {
   localStorage.removeItem('usuario');
   window.location.href = 'index.html';
-};
-
-document.getElementById('descargarExcel').onclick = function() {
-  const vehicular = tipoSwitch.checked;
-  const columnasPeatonal = [
-    'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'Motivo', 'FotoDni'
-  ];
-  const columnasVehicular = [
-    'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'PlacaTracto', 'PlacaCarreta', 'Motivo', 'FotoDni', 'FotoVehiculo', 'FotoPosterior'
-  ];
-  const columnas = vehicular ? columnasVehicular : columnasPeatonal;
-  const filtrados = aplicarFiltros(registros);
-  let csv = '';
-  csv += columnas.join(',') + '\n';
-  filtrados.forEach(r => {
-    csv += columnas.map(col => {
-      if (col.startsWith('Foto') && r[col]) {
-        return '"' + r[col] + '"';
-      }
-      let val = r[col] || '';
-      if (typeof val === 'string' && (val.includes(',') || val.includes('"'))) {
-        val = '"' + val.replace(/"/g, '""') + '"';
-      }
-      return val;
-    }).join(',') + '\n';
-  });
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'registros_filtrados.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
 }; 
