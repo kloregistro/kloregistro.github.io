@@ -191,6 +191,20 @@ document.getElementById('registroForm').onsubmit = async function(e) {
     btn.innerHTML = originalBtnHtml;
     return alert('Complete todos los campos obligatorios.');
   }
+  
+  // Validar foto de documentación
+  let fotoDocumentacion = '';
+  if (acceso === 'peatonal') {
+    fotoDocumentacion = document.getElementById('btnFotoDocumentacionPeatonal').dataset.url || '';
+  } else if (acceso === 'vehicular') {
+    fotoDocumentacion = document.getElementById('btnFotoDocumentacionVehicular').dataset.url || '';
+  }
+  
+  if (!fotoDocumentacion) {
+    btn.disabled = false;
+    btn.innerHTML = originalBtnHtml;
+    return alert('Debe tomar la Foto de Documentación.');
+  }
   let payload = {
     usuario,
     fechaHora: document.getElementById('fechaHora').value,
