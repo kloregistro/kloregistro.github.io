@@ -1,7 +1,7 @@
 // Configuración centralizada del sistema
 const CONFIG = {
   // URL del Apps Script desplegado
-  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwIR4ZHyyT_BVLksYGkZTrDoWBmTR0KS_kEqTRaOW6jLOHZEwmZEgq3K3XhzgUlbmfM/exec',
+  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwsmmCPmBvhXN4Q7GqUraMEssyL9jt2hSVoaxpwtF5ofVuxneFInYbV5HjH084q2b8R/exec',
   
   // Configuración de Cloudinary
   CLOUDINARY: {
