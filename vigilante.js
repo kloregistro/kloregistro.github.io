@@ -7,7 +7,11 @@ document.getElementById('footerUsuario').textContent = usuario;
 function actualizarFechaHora() {
   const now = new Date();
   const fecha = now.toLocaleDateString('es-PE');
-  const hora = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+  const hora = now.toLocaleTimeString('es-PE', { 
+    hour: '2-digit', 
+    minute: '2-digit',
+    hour12: true 
+  });
   document.getElementById('fechaHora').value = `${fecha} ${hora}`;
 }
 actualizarFechaHora();
