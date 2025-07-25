@@ -98,10 +98,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     const vehicular = tipoSwitch.checked;
     // Definir columnas
     const columnasPeatonal = [
-      'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'Motivo', 'FotoDni'
+      'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'Motivo', 'FotoDni', 'FotoDocumentacion'
     ];
     const columnasVehicular = [
-      'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'PlacaTracto', 'PlacaCarreta', 'Motivo', 'FotoDni', 'FotoVehiculo', 'FotoPosterior'
+      'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'PlacaTracto', 'PlacaCarreta', 'Motivo', 'FotoDni', 'FotoVehiculo', 'FotoPosterior', 'FotoDocumentacion'
     ];
     const columnas = vehicular ? columnasVehicular : columnasPeatonal;
     // Render header
@@ -172,10 +172,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('descargarExcel').onclick = function() {
     const vehicular = tipoSwitch.checked;
     const columnasPeatonal = [
-      'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'Motivo', 'FotoDni'
+      'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'Motivo', 'FotoDni', 'FotoDocumentacion'
     ];
     const columnasVehicular = [
-      'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'PlacaTracto', 'PlacaCarreta', 'Motivo', 'FotoDni', 'FotoVehiculo', 'FotoPosterior'
+      'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'PlacaTracto', 'PlacaCarreta', 'Motivo', 'FotoDni', 'FotoVehiculo', 'FotoPosterior', 'FotoDocumentacion'
     ];
     const columnas = vehicular ? columnasVehicular : columnasPeatonal;
     const filtrados = aplicarFiltros(registros);
