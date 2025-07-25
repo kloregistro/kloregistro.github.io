@@ -248,6 +248,10 @@ document.getElementById('registroForm').onsubmit = async function(e) {
       return alert('Placa Carreta debe tener el formato ABC-123 o "No Aplica"');
     }
   }
+  // Debug: Log para ver qué se está enviando
+  console.log('Payload a enviar:', JSON.stringify(payload));
+  console.log('FotoDocumentacion en payload:', payload.fotoDocumentacion);
+  
   // Enviar al backend
   try {
     const result = await callBackend('registrarVisita', { data: JSON.stringify(payload) });
