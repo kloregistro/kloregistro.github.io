@@ -97,12 +97,16 @@ async function cargarMotivos() {
 }
 cargarMotivos();
 
-// Mostrar input de "Otros" si se selecciona
+// Mostrar input de "Detalles" siempre que se seleccione un motivo
 function toggleMotivoOtro(selectId, inputId) {
   const select = document.getElementById(selectId);
   const input = document.getElementById(inputId);
+  
+  // Cambiar placeholder a "Detalles"
+  input.placeholder = 'Detalles';
+  
   select.addEventListener('change', function() {
-    if (this.value === 'Otros') {
+    if (this.value && this.value !== '') {
       input.style.display = 'block';
       input.required = true;
     } else {
@@ -162,6 +166,15 @@ document.getElementById('btnFotoPosterior').onclick = () => tomarFoto(url => {
   document.getElementById('previewFotoPosterior').innerHTML = `<img src="${url}">`;
   document.getElementById('btnFotoPosterior').dataset.url = url;
 });
+// Manejo de fotos de documentación
+document.getElementById('btnFotoDocumentacionPeatonal').onclick = () => tomarFoto(url => {
+  document.getElementById('previewFotoDocumentacionPeatonal').innerHTML = `<img src="${url}">`;
+  document.getElementById('btnFotoDocumentacionPeatonal').dataset.url = url;
+});
+document.getElementById('btnFotoDocumentacionVehicular').onclick = () => tomarFoto(url => {
+  document.getElementById('previewFotoDocumentacionVehicular').innerHTML = `<img src="${url}">`;
+  document.getElementById('btnFotoDocumentacionVehicular').dataset.url = url;
+});
 
 // --- Validación y envío del formulario ---
 document.getElementById('registroForm').onsubmit = async function(e) {
@@ -189,8 +202,10 @@ document.getElementById('registroForm').onsubmit = async function(e) {
     payload.nombres = document.getElementById('nombresPeatonal').value;
     payload.documento = document.getElementById('documentoPeatonal').value;
     payload.fotoDni = document.getElementById('btnFotoDni').dataset.url || '';
+    payload.fotoDocumentacion = document.getElementById('btnFotoDocumentacionPeatonal').dataset.url || '';
     const motivoSel = document.getElementById('motivoPeatonal').value;
-    payload.motivo = motivoSel === 'Otros' ? document.getElementById('motivoPeatonalOtro').value : motivoSel;
+    const detalles = document.getElementById('motivoPeatonalOtro').value;
+    payload.motivo = detalles ? `${motivoSel} - ${detalles}` : motivoSel;
   } else if (acceso === 'vehicular') {
     payload.empresa = document.getElementById('empresaVehicular').value;
     payload.nombres = document.getElementById('nombresVehicular').value;
@@ -200,8 +215,10 @@ document.getElementById('registroForm').onsubmit = async function(e) {
     payload.placaCarreta = document.getElementById('placaCarreta').value || 'No Aplica';
     payload.fotoVehiculo = document.getElementById('btnFotoVehiculo').dataset.url || '';
     payload.fotoPosterior = document.getElementById('btnFotoPosterior').dataset.url || '';
+    payload.fotoDocumentacion = document.getElementById('btnFotoDocumentacionVehicular').dataset.url || '';
     const motivoSel = document.getElementById('motivoVehicular').value;
-    payload.motivo = motivoSel === 'Otros' ? document.getElementById('motivoVehicularOtro').value : motivoSel;
+    const detalles = document.getElementById('motivoVehicularOtro').value;
+    payload.motivo = detalles ? `${motivoSel} - ${detalles}` : motivoSel;
   }
   // Validaciones extra
   if (acceso === 'vehicular') {
@@ -232,6 +249,8 @@ document.getElementById('registroForm').onsubmit = async function(e) {
       document.getElementById('previewFotoVehiculo').innerHTML = '';
       document.getElementById('previewFotoPosterior').innerHTML = '';
       document.getElementById('previewFotoDniVehicular').innerHTML = '';
+      document.getElementById('previewFotoDocumentacionPeatonal').innerHTML = '';
+      document.getElementById('previewFotoDocumentacionVehicular').innerHTML = '';
     } else {
       alert('Error: ' + (result.message || 'No se pudo registrar.'));
     }
