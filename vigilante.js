@@ -34,9 +34,9 @@ function alternarCampos() {
     camposPeatonal.style.display = 'block';
     camposVehicular.style.display = 'none';
     
-    // Habilitar required en campos peatonal
+    // Habilitar required en campos peatonal (excepto foto de documentación)
     inputsPeatonal.forEach(input => {
-      if (input.id !== 'empresaPeatonal' && input.id !== 'nombresPeatonal' && input.id !== 'documentoPeatonal') {
+      if (input.id !== 'empresaPeatonal' && input.id !== 'nombresPeatonal' && input.id !== 'documentoPeatonal' && input.id !== 'btnFotoDocumentacionPeatonal') {
         input.required = true;
       }
     });
@@ -192,18 +192,23 @@ document.getElementById('registroForm').onsubmit = async function(e) {
     return alert('Complete todos los campos obligatorios.');
   }
   
-  // Validar foto de documentación
-  let fotoDocumentacion = '';
+  // Validar fotos según tipo de acceso
   if (acceso === 'peatonal') {
-    fotoDocumentacion = document.getElementById('btnFotoDocumentacionPeatonal').dataset.url || '';
+    // Para peatonal: solo foto de DNI es obligatoria
+    const fotoDni = document.getElementById('btnFotoDni').dataset.url || '';
+    if (!fotoDni) {
+      btn.disabled = false;
+      btn.innerHTML = originalBtnHtml;
+      return alert('Debe tomar la Foto de DNI.');
+    }
   } else if (acceso === 'vehicular') {
-    fotoDocumentacion = document.getElementById('btnFotoDocumentacionVehicular').dataset.url || '';
-  }
-  
-  if (!fotoDocumentacion) {
-    btn.disabled = false;
-    btn.innerHTML = originalBtnHtml;
-    return alert('Debe tomar la Foto de Documentación.');
+    // Para vehicular: foto de documentación es obligatoria
+    const fotoDocumentacion = document.getElementById('btnFotoDocumentacionVehicular').dataset.url || '';
+    if (!fotoDocumentacion) {
+      btn.disabled = false;
+      btn.innerHTML = originalBtnHtml;
+      return alert('Debe tomar la Foto de Documentación.');
+    }
   }
   let payload = {
     usuario,
