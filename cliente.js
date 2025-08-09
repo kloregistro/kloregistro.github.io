@@ -104,19 +104,35 @@ window.addEventListener('DOMContentLoaded', async () => {
       'FechaHora', 'Usuario', 'TipoRegistro', 'Empresa', 'Nombres', 'Documento', 'PlacaTracto', 'PlacaCarreta', 'Motivo', 'FotoDni', 'FotoVehiculo', 'FotoPosterior', 'FotoDocumentacion'
     ];
     const columnas = vehicular ? columnasVehicular : columnasPeatonal;
+    // Mapa de etiquetas amigables para columnas (usado en móvil)
+    const labelMap = {
+      FechaHora: 'Fecha y Hora',
+      TipoRegistro: 'Tipo de Registro',
+      PlacaTracto: 'Placa Tracto',
+      PlacaCarreta: 'Placa Carreta',
+      FotoDni: 'Foto DNI',
+      FotoVehiculo: 'Foto Vehículo',
+      FotoPosterior: 'Foto Posterior',
+      FotoDocumentacion: 'Foto Documentación'
+    };
+    const getLabel = (col) => labelMap[col] || col.replace(/([A-Z])/g, ' $1').trim();
     // Render header
-    document.getElementById('tablaHeader').innerHTML = columnas.map(col => `<th>${col.replace(/([A-Z])/g, ' $1').trim()}</th>`).join('');
+    document.getElementById('tablaHeader').innerHTML = columnas.map(col => `<th data-col="${col}">${getLabel(col)}</th>`).join('');
     // Render body
     if (filtrados.length === 0) {
       document.getElementById('tablaBody').innerHTML = '<tr><td colspan="'+columnas.length+'">No hay registros</td></tr>';
       return;
     }
-    document.getElementById('tablaBody').innerHTML = filtrados.map((r, idx) => {
+    document.getElementById('tablaBody').innerHTML = filtrados.map((r) => {
       return '<tr>' + columnas.map(col => {
-        if (col.startsWith('Foto') && r[col]) {
-          return `<td><a href="#" class="ver-imagen" data-img="${r[col]}" title="Ver imagen"><i class="fa-regular fa-image"></i></a></td>`;
+        const label = getLabel(col);
+        if (col.startsWith('Foto')) {
+          if (r[col]) {
+            return `<td data-col="${col}" data-label="${label}"><a href="#" class="ver-imagen" data-img="${r[col]}" title="Ver imagen"><i class="fa-regular fa-image"></i></a></td>`;
+          }
+          return `<td data-col="${col}" data-label="${label}"></td>`;
         }
-        return `<td>${r[col] || ''}</td>`;
+        return `<td data-col="${col}" data-label="${label}">${r[col] || ''}</td>`;
       }).join('') + '</tr>';
     }).join('');
     // Asignar eventos a los links de imagen
